@@ -1,12 +1,14 @@
 #ifndef NODE_H
 #define NODE_H
-
+#include <iostream>
 template <typename datatype> 
 class Node{
+
+private: 
     datatype data;
     Node<datatype> *next;
     Node<datatype> *prev;
- 
+    
 public:
     Node();
     Node(datatype data);

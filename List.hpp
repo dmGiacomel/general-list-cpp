@@ -1,14 +1,17 @@
 #ifndef LIST_H
 #define LIST_H
 #include "Node.hpp"
+#include <iostream>
 
 template <typename datatype> 
 class List{
+
+private: 
     Node <datatype> *first;
     Node <datatype> *last;
     unsigned long long int size;
 
-    public:
+public:
     List();
     ~List();
  
@@ -22,6 +25,8 @@ class List{
     void setLast(datatype data);
     void append(datatype data);
     void insertFirst(datatype data);
+
+    datatype removeFirst();
 
 };
 
@@ -37,25 +42,72 @@ List<datatype>::~List(){
     Node <datatype> *aux = first;
 
     while (aux != nullptr){
-        first = first->next;
+        first = first->getNext();
         delete(first);
         aux = first;
     }
 }
 
 template <typename datatype>
-void List<datatype>::insertFirst(datatype data){
-
-    Node<datatype> *aux;
-    aux = new Node<datatype>();
-
-    aux->setNext(first);
-    first = aux;
+unsigned long long int List<datatype>::getSize(){
+    return size;
 }
 
 template <typename datatype>
-void List<datatype>::insertLast(dataype data){
+void List<datatype>::insertFirst(datatype data){
+
+    Node<datatype> *aux;
+    aux = new Node<datatype>(data);
+
+    aux->setNext(first);
+    first = aux;
+    if(last == nullptr){
+        last = aux;
+    }
+
+    size++;
+}
+
+template <typename datatype>
+void List<datatype>::append(datatype data){
+   
+    Node<datatype> *aux; 
+    aux = new Node<datatype>(data);
+    aux->setNext(nullptr);
+
+    if(size > 0){
+        last->setNext(aux);
+        last = aux;
+    }else{
+        last = aux;
+        first = aux;
+    }
+    //std::cout << "CHEGUE AQUI\n";
     
+    size++;
+}
+
+template <typename datatype>
+datatype List<datatype>::removeFirst(){
+
+    datatype data{0};
+    Node<datatype> *aux;
+
+    if(first != nullptr){
+        data = first->getData();
+        aux = first;
+        first = first->getNext();
+        delete(aux);
+        size--;
+
+        if(first == nullptr){
+            last = nullptr;
+        }
+    }else{
+        std::cout << "Empty List! Returning default <datatype> 0 value...\n";
+    }
+
+    return data;
 }
 
 #endif
