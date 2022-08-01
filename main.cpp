@@ -1,27 +1,29 @@
 #include <iostream>
-//#include "List.hpp"
 #include "Queue.hpp"
 int main(){
-
-    // List<int> *lista;
-    // lista = new List<int>();
-
-    // lista->append(1);
-    // lista->append(2);
-
-    // std::cout << lista->removeFirst() << std::endl;
-    // std::cout << lista->removeFirst() << std::endl;
-    // std::cout << lista->removeFirst() << std::endl;
 
     Queue<int> *queue;
     queue = new Queue<int>();
 
     queue->enQueue(2);
     queue->enQueue(1);
-    std::cout << queue->deQueue() << std::endl;
-    std::cout << queue->deQueue() << std::endl;
-    queue->enQueue(42);
-    std::cout << queue->deQueue() << std::endl;
+    queue->enQueue(7);
+    queue->enQueue(37);
+    queue->printQueue();
+
+
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+
+    queue->enQueue(37);    
+    std::cout << "dequeued: " << queue->deQueue() << std::endl;
+    queue->printQueue();
+
+    delete(queue);
 
     return 0; 
 }

@@ -1,7 +1,23 @@
+//---------------------------------Classe LIST --------------------------------------------------
+
+//----Cada lista tem um ponteiro para o nó inicial, um ponteiro para o nó final e um campo tamanho
+
+//----classe com getters, setters e métodos espécíficos de manipulação de lista
+//----construtor padrao e destrutor padrao
+//----nem todos os métodos foram definidos ainda, apenas os necessários para as finalidades do trabalho 
+
+//----IFNDEF para prevenir múltiplos includes
+
+//________OBS: classes que utilizam template não podem ter assinaturas e definições em arquivos diferentes
+//------------------------------------------------------------------------------------------------
+
 #ifndef LIST_H
 #define LIST_H
 #include "Node.hpp"
 #include <iostream>
+
+
+
 
 template <typename datatype> 
 class List{
@@ -21,12 +37,14 @@ public:
 
     datatype getElementByPosition(unsigned long long int position);
     bool elementExists(datatype data);
-    void setFirst(datatype data);
-    void setLast(datatype data);
+    void setFirst(Node<datatype> node);
+    void setLast(Node<datatype> node);
     void append(datatype data);
     void insertFirst(datatype data);
 
     datatype removeFirst();
+
+    void printList();
 
 };
 
@@ -46,6 +64,16 @@ List<datatype>::~List(){
         delete(first);
         aux = first;
     }
+}
+
+template <typename datatype>
+void List<datatype>::setFirst(Node<datatype> node){
+    first = node;
+}
+
+template <typename datatype>
+void List<datatype>::setLast(Node<datatype> node){
+    last = node;
 }
 
 template <typename datatype>
@@ -82,7 +110,6 @@ void List<datatype>::append(datatype data){
         last = aux;
         first = aux;
     }
-    //std::cout << "CHEGUE AQUI\n";
     
     size++;
 }
@@ -110,4 +137,23 @@ datatype List<datatype>::removeFirst(){
     return data;
 }
 
+
+template <typename datatype>
+void List<datatype>::printList(){
+
+    Node<datatype> *aux = first;
+    unsigned long long int cont{0};
+
+    if(size == 0){
+        std::cout << "[]" << std::endl;
+    }else{
+        std::cout << "[";
+        while(cont < size - 1){
+            std::cout << aux->getData() << ", "; 
+            aux = aux->getNext();
+            cont++;
+        }
+        std::cout << aux->getData() << "]" << std::endl; 
+    }
+}
 #endif
