@@ -4,9 +4,11 @@
 
 //----classe com getters, setters e métodos espécíficos de manipulação de lista
 //----construtor padrao e destrutor padrao
-//----nem todos os métodos foram definidos ainda, apenas os necessários para as finalidades do trabalho 
+//----nem todos os métodos foram definidos e declarados ainda, apenas os necessários para as finalidades do trabalho 
 
 //----IFNDEF para prevenir múltiplos includes
+
+//CUIDADO AO UTILIZAR O PRINT- pode não funcionar pra todo tipo de dado.
 
 //________OBS: classes que utilizam template não podem ter assinaturas e definições em arquivos diferentes
 //------------------------------------------------------------------------------------------------
@@ -16,9 +18,9 @@
 #include "Node.hpp"
 #include <iostream>
 
-
-
-
+//*******************************************************************************
+//------------DECLARACAO DA CLASSE, METODOS E ATRIBUTOS------------------------
+//*******************************************************************************
 template <typename datatype> 
 class List{
 
@@ -37,17 +39,25 @@ public:
 
     datatype getElementByPosition(unsigned long long int position);
     bool elementExists(datatype data);
-    void setFirst(Node<datatype> node);
-    void setLast(Node<datatype> node);
+    void setFirst(Node<datatype> *node);
+    void setLast(Node<datatype> *node);
     void append(datatype data);
     void insertFirst(datatype data);
 
     datatype removeFirst();
+    datatype removeLast();
 
     void printList();
 
 };
 
+
+
+//*************************************************************************
+//-----------DEFINICAO DOS METODOS DA CLASSE-------------------------------
+//*************************************************************************
+
+//construtor padrao. inicializa uma lista vazia
 template <typename datatype>
 List<datatype>::List(){
     first = nullptr;
@@ -55,6 +65,7 @@ List<datatype>::List(){
     size = 0;
 }
 
+//destrutor padrao. desaloca todos os nós
 template <typename datatype>
 List<datatype>::~List(){
     Node <datatype> *aux = first;
@@ -66,44 +77,50 @@ List<datatype>::~List(){
     }
 }
 
+//seta o campo first para o ponteiro para nó recebido
 template <typename datatype>
-void List<datatype>::setFirst(Node<datatype> node){
+void List<datatype>::setFirst(Node<datatype> *node){
     first = node;
 }
 
+//seta o campo last para o ponteiro para nó recebido
 template <typename datatype>
-void List<datatype>::setLast(Node<datatype> node){
+void List<datatype>::setLast(Node<datatype> *node){
     last = node;
 }
 
+//retorna o valor do campo size
 template <typename datatype>
 unsigned long long int List<datatype>::getSize(){
     return size;
 }
 
+//insere data no início da lista
 template <typename datatype>
 void List<datatype>::insertFirst(datatype data){
 
     Node<datatype> *aux;
-    aux = new Node<datatype>(data);
+    aux = new Node<datatype>(data, nullptr, first);
 
-    aux->setNext(first);
-    first = aux;
-    if(last == nullptr){
+    if (size != 0){
+        first->setPrev(aux);
+        first = aux;
+    }else{
+        first = aux;
         last = aux;
     }
 
     size++;
 }
 
+//insere data no fim da lista
 template <typename datatype>
 void List<datatype>::append(datatype data){
    
     Node<datatype> *aux; 
-    aux = new Node<datatype>(data);
-    aux->setNext(nullptr);
+    aux = new Node<datatype>(data, last, nullptr);
 
-    if(size > 0){
+    if(size != 0){
         last->setNext(aux);
         last = aux;
     }else{
@@ -114,10 +131,11 @@ void List<datatype>::append(datatype data){
     size++;
 }
 
+//remove o item à esquerda da lista e retorna o valor do item removido
 template <typename datatype>
 datatype List<datatype>::removeFirst(){
 
-    datatype data{0};
+    datatype data;
     Node<datatype> *aux;
 
     if(first != nullptr){
@@ -125,19 +143,43 @@ datatype List<datatype>::removeFirst(){
         aux = first;
         first = first->getNext();
         delete(aux);
-        size--;
-
+        
         if(first == nullptr){
             last = nullptr;
+        }else{
+            first->setPrev(nullptr);
         }
     }else{
+        data = 0;
         std::cout << "Empty List! Returning default <datatype> 0 value...\n";
     }
+
+    size--;
 
     return data;
 }
 
+template <typename datatype>
+datatype List<datatype>::removeLast(){
 
+    datatype data;
+    Node<datatype>;
+
+    if (size == 0){
+        data = 0;
+        std::cout << "Empty List! Returning default <datatype> 0 value...\n";
+    }else{
+        data = last->getData();
+        aux = last;
+        
+    }
+
+    return 0;
+}
+
+
+//printa a lista usando cout
+//CUIDADO AO UTILIZAR - pode não funcionar pra todo tipo de dado.
 template <typename datatype>
 void List<datatype>::printList(){
 
