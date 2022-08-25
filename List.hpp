@@ -33,8 +33,8 @@ public:
     List();
     ~List();
  
-    datatype getFirst();
-    datatype getLast();
+    Node<datatype> *getFirst();
+    Node<datatype> *getLast();
     unsigned long long int getSize();
 
     datatype getElementByPosition(unsigned long long int position);
@@ -50,7 +50,6 @@ public:
     void printList();
 
 };
-
 
 
 //*************************************************************************
@@ -83,6 +82,17 @@ void List<datatype>::setFirst(Node<datatype> *node){
     first = node;
 }
 
+
+template <typename datatype>
+Node<datatype>* List<datatype>::getFirst(){
+    return first;
+}
+
+template <typename datatype>
+Node<datatype>* List<datatype>::getLast(){
+    return last;
+}
+
 //seta o campo last para o ponteiro para nó recebido
 template <typename datatype>
 void List<datatype>::setLast(Node<datatype> *node){
@@ -99,10 +109,9 @@ unsigned long long int List<datatype>::getSize(){
 template <typename datatype>
 void List<datatype>::insertFirst(datatype data){
 
-    Node<datatype> *aux;
-    aux = new Node<datatype>(data, nullptr, first);
+    Node<datatype> *aux = new Node<datatype>(data, nullptr, first);
 
-    if (size != 0){
+    if(size > 0){
         first->setPrev(aux);
         first = aux;
     }else{
@@ -117,18 +126,18 @@ void List<datatype>::insertFirst(datatype data){
 template <typename datatype>
 void List<datatype>::append(datatype data){
    
-    Node<datatype> *aux; 
-    aux = new Node<datatype>(data, last, nullptr);
+    Node<datatype> *aux = new Node<datatype>(data, last, nullptr);
 
-    if(size != 0){
+    if(size > 0){
         last->setNext(aux);
         last = aux;
     }else{
-        last = aux;
+        last = aux; 
         first = aux;
     }
-    
+
     size++;
+    
 }
 
 //remove o item à esquerda da lista e retorna o valor do item removido
@@ -163,18 +172,27 @@ template <typename datatype>
 datatype List<datatype>::removeLast(){
 
     datatype data;
-    Node<datatype>;
+    Node<datatype> *aux;
 
-    if (size == 0){
-        data = 0;
-        std::cout << "Empty List! Returning default <datatype> 0 value...\n";
-    }else{
+    if(last != nullptr){
         data = last->getData();
         aux = last;
+        last = last->getPrev();
+        delete(aux);
         
+        if(last == nullptr){
+            first = nullptr;
+        }else{
+            last->setNext(nullptr);
+        }
+    }else{
+        data = 0;
+        std::cout << "Empty List! Returning default <datatype> 0 value...\n";
     }
 
-    return 0;
+    size--;
+
+    return data;
 }
 
 
@@ -189,8 +207,10 @@ void List<datatype>::printList(){
     if(size == 0){
         std::cout << "[]" << std::endl;
     }else{
+
         std::cout << "[";
         while(cont < size - 1){
+            
             std::cout << aux->getData() << ", "; 
             aux = aux->getNext();
             cont++;

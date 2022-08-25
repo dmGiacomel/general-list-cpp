@@ -109,7 +109,7 @@ Node<datatype>* Node<datatype>::getPrev(){
 
 //seta o ponteiro prev por parametro
 template <typename datatype> 
-void Node<datatype>::setPrev(Node<datatype> *next){
+void Node<datatype>::setPrev(Node<datatype> *prev){
     this->prev = prev;
 }
 

@@ -6,19 +6,16 @@ int main(){
     lista = new List<int>();
 
     lista->insertFirst(1);
+    lista->insertFirst(2); 
+    lista->insertFirst(3);
 
     lista->printList();
-    lista->insertFirst(2);
-    lista->append(3);
-    lista->append(4);
-
-    lista->removeFirst();
-    lista->removeFirst();
     
-    lista->insertFirst(10);
-
-    std::cout << lista->getSize();
-
+    lista->removeLast();
+    lista->printList();
+    lista->removeLast();
+    lista->printList();
+    lista->removeLast();
     lista->printList();
     return 0; 
 }
