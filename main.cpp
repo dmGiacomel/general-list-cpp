@@ -2,20 +2,24 @@
 #include "List.hpp"
 int main(){
 
-    List<int> *lista;
+    List<int> *lista, *l;
     lista = new List<int>();
+    l = new List<int>();
 
-    lista->insertFirst(1);
-    lista->insertFirst(2); 
-    lista->insertFirst(3);
+    lista->append(4);
+    lista->append(5);
+    lista->append(6);
 
     lista->printList();
-    
-    lista->removeLast();
-    lista->printList();
-    lista->removeLast();
-    lista->printList();
-    lista->removeLast();
+
+    l->append(1);
+    l->append(2);
+    l->append(3);
+
+    l->printList();
+
+    lista->insertFirstList(l);
+
     lista->printList();
     return 0; 
 }

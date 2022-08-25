@@ -43,6 +43,8 @@ public:
     void setLast(Node<datatype> *node);
     void append(datatype data);
     void insertFirst(datatype data);
+    void insertFirstList(List<datatype> *list);
+    void appendList(List<datatype> *list);
 
     datatype removeFirst();
     datatype removeLast();
@@ -218,4 +220,31 @@ void List<datatype>::printList(){
         std::cout << aux->getData() << "]" << std::endl; 
     }
 }
+
+//DECISÃO DE PROJETO: isso é diferente de concatenação. A lista copiada será item por item 
+//adicionada à nova lista pelo fim, com cópia profunda
+template <typename datatype>
+void List<datatype>::appendList(List<datatype> *list){
+
+    unsigned long long int cont = list->size;
+    Node<datatype> *aux = list->getFirst();
+
+    while(cont-- > 0){
+        append(aux->getData());
+        aux = aux->getNext();
+    }
+}
+
+template <typename datatype>
+void List<datatype>::insertFirstList(List<datatype> *list){
+
+    unsigned long long int cont = list->size;
+    Node<datatype> *aux = list->getLast();
+
+    while(cont-- > 0){
+        insertFirst(aux->getData());
+        aux = aux->getPrev();
+    }
+}
+
 #endif
