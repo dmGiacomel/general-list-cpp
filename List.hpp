@@ -29,22 +29,28 @@ private:
     Node <datatype> *last;
     unsigned long long int size;
 
+    Node<datatype> *getNodeByElementValue();
+    Node<datatype> *getFirst();
+    Node<datatype> *getLast();
+
 public:
     List();
     ~List();
  
-    Node<datatype> *getFirst();
-    Node<datatype> *getLast();
-    unsigned long long int getSize();
-
-    datatype getElementByPosition(unsigned long long int position);
-    bool elementExists(datatype data);
     void setFirst(Node<datatype> *node);
     void setLast(Node<datatype> *node);
+    unsigned long long int getSize();
+
     void append(datatype data);
     void insertFirst(datatype data);
     void insertFirstList(List<datatype> *list);
     void appendList(List<datatype> *list);
+    void insertElementIntoPosition(datatype data, unsigned long long int position);
+
+    datatype getElementByPosition(unsigned long long int position);
+
+    bool elementExists(datatype data);
+    void deleteElementIfExists();
 
     datatype removeFirst();
     datatype removeLast();
@@ -222,7 +228,7 @@ void List<datatype>::printList(){
 }
 
 //DECISÃO DE PROJETO: isso é diferente de concatenação. A lista copiada será item por item 
-//adicionada à nova lista pelo fim, com cópia profunda
+//adicionada à nova lista pelo fim e pelo começo.
 template <typename datatype>
 void List<datatype>::appendList(List<datatype> *list){
 
@@ -234,7 +240,6 @@ void List<datatype>::appendList(List<datatype> *list){
         aux = aux->getNext();
     }
 }
-
 template <typename datatype>
 void List<datatype>::insertFirstList(List<datatype> *list){
 
@@ -246,5 +251,8 @@ void List<datatype>::insertFirstList(List<datatype> *list){
         aux = aux->getPrev();
     }
 }
+
+
+
 
 #endif
