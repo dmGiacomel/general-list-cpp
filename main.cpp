@@ -2,24 +2,20 @@
 #include "List.hpp"
 int main(){
 
-    List<int> *lista, *l;
+    List<int> *lista;
     lista = new List<int>();
-    l = new List<int>();
 
-    lista->append(4);
-    lista->append(5);
-    lista->append(6);
-
-    lista->printList();
-
-    l->append(1);
-    l->append(2);
-    l->append(3);
-
-    l->printList();
-
-    lista->insertFirstList(l);
+    lista->append(1);
+    lista->append(2);
+    lista->append(3);
 
     lista->printList();
+
+    int n = 0;
+    if(lista->elementExists(n)){
+        std::cout << "existe o " << n << "\n";
+    }else{
+         std::cout << "ñ existe o " << n << "\n";
+    }
     return 0; 
 }

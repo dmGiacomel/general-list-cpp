@@ -252,7 +252,24 @@ void List<datatype>::insertFirstList(List<datatype> *list){
     }
 }
 
+template <typename datatype>
+bool List<datatype>::elementExists(datatype data){
 
+    Node<datatype> *aux = first;
+    bool exists = false;
 
+    while(aux != nullptr){
+
+        if(aux->getData() == data){
+            exists = true;
+            break;
+        }
+
+        aux = aux->getNext();
+    }
+
+    return exists;
+
+}
 
 #endif
